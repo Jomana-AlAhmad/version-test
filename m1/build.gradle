@@ -17,6 +17,7 @@ scmVersion {
         prefix = 'm1'
     }
 }
+
 project.version = scmVersion.version
 
 
