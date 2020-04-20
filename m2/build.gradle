@@ -26,7 +26,8 @@ project.version = scmVersion.version
 task extendedTestRelease {
     scmVersion {
         tag {
-            prefix = 'm2-extended-test'
+//            prefix = ''
+            serialize = { tag, version -> 'm2-' + version + '-extended-test'}
         }
     }
 
