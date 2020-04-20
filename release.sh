@@ -47,12 +47,13 @@ function promote() {
     git push --tags
 }
 
+
 # latest gets the latest version number for a given module and promotion stage
 function latest() {
     MODULE=$1
     PROMOTED_TO=$2
     TAG_SUFFIX=-${PROMOTED_TO}
-    if [ -z "$PROMOTED_TO"]; then
+    if [ -z "$PROMOTED_TO" ]; then
        TAG_SUFFIX=""
     fi
 
