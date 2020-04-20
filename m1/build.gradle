@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'pl.allegro.tech.build.axion-release' version '1.10.1'
+
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+scmVersion {
+    tag {
+        prefix = 'm1'
+    }
+}
+project.version = scmVersion.version
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
