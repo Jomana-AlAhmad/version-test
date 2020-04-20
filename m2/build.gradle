@@ -22,3 +22,12 @@ scmVersion {
     }
 }
 project.version = scmVersion.version
+
+task extendedTestRelease {
+    scmVersion {
+        tag {
+            prefix = 'm2-extended-test'
+        }
+    }
+
+}
