@@ -3,7 +3,10 @@
 # release bumps the version number and pushes the new tag for a given module
 function release() {
     MODULE=$1
-
+    if ! git branch --show-current | grep "^master$"; then
+        echo "Not on master. Refusing to release"
+        return
+    fi
     # Tag with 0.1.0 if this is the first ever version
     if ! git tag -l | grep -q "^${MODULE}-[0-9]*\.[0-9]*\.[0-9]*$"; then
         echo "First release"
