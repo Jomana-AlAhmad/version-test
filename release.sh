@@ -3,7 +3,9 @@
 # release bumps the version number and pushes the new tag for a given module
 function release() {
     MODULE=$1
-    if ! git branch --show-current | grep "^master$"; then
+
+    CURRENT_REVISION=$(git rev-parse HEAD)
+    if ! git branch -r --contains ${CURRENT_REVISION} | grep -q "origin/master"; then
         echo "Not on master. Refusing to release"
         return
     fi
@@ -11,6 +13,7 @@ function release() {
     if ! git tag -l | grep -q "^${MODULE}-[0-9]*\.[0-9]*\.[0-9]*$"; then
         echo "First release"
         git tag ${MODULE}-0.1.0
+        git push --tags
         return
     fi
 
@@ -48,7 +51,18 @@ function promote() {
 function latest() {
     MODULE=$1
     PROMOTED_TO=$2
-    local VERSION=$(git tag -l | grep "^${MODULE}-[0-9]*\.[0-9]*\.[0-9]*-${PROMOTED_TO}$" | sed "s/${MODULE}-//" | sed "s/-${PROMOTED_TO}//" | sort -V | tail -n 1)
+    TAG_SUFFIX=-${PROMOTED_TO}
+    if [ -z "$PROMOTED_TO"]; then
+       TAG_SUFFIX=""
+    fi
+
+    CURRENT_REVISION=$(git rev-parse HEAD)
+    if ! git branch -r --contains ${CURRENT_REVISION} | grep -q "origin/master"; then
+        echo $(git rev-parse --short HEAD)
+        return
+    fi
+
+    local VERSION=$(git tag -l | grep "^${MODULE}-[0-9]*\.[0-9]*\.[0-9]*${TAG_SUFFIX}$" | sed "s/${MODULE}-//" | sed "s/-${PROMOTED_TO}//" | sort -V | tail -n 1)
     echo ${VERSION}
 }
 

@@ -8,4 +8,5 @@ cd ${PROJECT_DIR}
 source ../release.sh
 
 promote m1 extended-test
+latest m1 extended-test
 

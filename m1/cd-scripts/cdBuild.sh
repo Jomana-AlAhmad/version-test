@@ -9,3 +9,5 @@ source ../release.sh
 
 release m1
 
+VERSION=$(latest m1 "")
+echo $VERSION
